@@ -57,15 +57,20 @@ public class Bola extends GOval{
 
 		auxiliar = ark.getElementAt(posx, posy);
 
-		if(auxiliar == ark.miCursor){ //si entra aqui es que choca con ell cursor
+		if(auxiliar == ark.miCursor){ //si entra aqui es que choca con el cursor
 			dy = dy*-1;
 			noHaChocado = false;
 		}else if(auxiliar == null){ //si vale nll es que no había nada ahí
 
-		}else{ //suponemos que es un ladrillo
+		}else if(auxiliar instanceof Ladrillo){ //verificamos que es un ladrillo
+			if(auxiliar.getY()+getHeight()<= posy || auxiliar.getY() >= posy ){
+				dy = dy*-1;
+			}else if(auxiliar.getX()+getWidth()<= posx || auxiliar.getX() >= posx ){
+				dx = dx*-1;
+			}
 			ark.remove(auxiliar);
-			dy = dy*-1;
-			dx = dx*-1;
+			
+			
 			noHaChocado = false;
 		}
 

@@ -21,7 +21,7 @@ public class Arkanoid extends GraphicsProgram {
 		creaPiramide();
 		while (true){
 			bola1.muevete(this);
-			pause(2);
+			pause(10);
 			miCursor.muevete(getWidth(), (int) bola1.getX());
 		}
 	}
