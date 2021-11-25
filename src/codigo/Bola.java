@@ -23,12 +23,12 @@ public class Bola extends GOval{
 
 	public void muevete(Arkanoid ark){
 		//rebote con el suelo y rebote con techo
-		if(getY()> ark.getHeight()||getY()<0){
+		if(getY()> ark.getHeight()||getY()<10){
 			dy = dy*-1;
 		}
 
 		//rebote con pared derecha y  rebote con pared izquierda
-		if(getX()> ark.getWidth()||getX()<0){
+		if(getX()+getWidth()> ark.ANCHO_PANTALLA -32||getX()<10){
 			dx = dx*-1;
 		}
 
