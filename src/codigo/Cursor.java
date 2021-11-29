@@ -13,7 +13,7 @@ public class Cursor extends GRect {
 		//color del recuadro del cursor
 		setVisible(false);
 
-		
+
 		setLocation(0, posicionY);
 		cursor60 = new GImage("imagenes/cursor60.png");
 		cursor60.setSize(ancho, alto);

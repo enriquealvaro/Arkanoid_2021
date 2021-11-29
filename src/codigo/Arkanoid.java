@@ -8,7 +8,7 @@ import acm.graphics.GImage;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
 public class Arkanoid extends GraphicsProgram {
-	
+
 	CustomFont cf = new CustomFont();
 
 	static final int ANCHO_LADRILLO =35;
@@ -16,6 +16,9 @@ public class Arkanoid extends GraphicsProgram {
 	static final int ANCHO_PANTALLA = 522;
 	static final int ALTO_PANTALLA =586;
 	static final int ANCHO_MARCADOR=300;
+	int vidas= 3;
+	int contador=3;
+	boolean victoria=false;
 	Bola bola1 = new Bola(10,10,Color.BLUE);
 	//declaro el fondo del juego
 	GImage fondo = new GImage("imagenes/fondo500,500.png");
@@ -23,17 +26,20 @@ public class Arkanoid extends GraphicsProgram {
 	GImage corazon1 = new GImage("imagenes/corazon50(1).png");
 	GImage corazon2 = new GImage("imagenes/corazon50(2).png");
 	GImage corazon3 = new GImage("imagenes/corazon50(3).png");
-	GImage fondoMarcador = new GImage("imagenes/fondo_marcador6.png");
-	Cursor cursor = new Cursor(400,60,10,Color.black);
 	Marcador miMarcador= new Marcador(20,40);
-	
-	
-	public void init(){
+	GImage fondoMarcador = new GImage("imagenes/fondo_marcador8.png");
+	Cursor cursor = new Cursor(400,60,10,Color.black);
 
+
+
+	public void init(){
+		//add(foto)
+		//waitForClick();
+		//remove(foto)
 		//añado el fondo del marcador
-		
+
 		add(fondoMarcador,ANCHO_PANTALLA-22,0);
-		
+
 		//añado dimensiones de la pantalla
 		setSize(ANCHO_PANTALLA+ANCHO_MARCADOR,ALTO_PANTALLA);
 		//añado el fondo lo primero porque asi se queda al fondo
@@ -41,41 +47,37 @@ public class Arkanoid extends GraphicsProgram {
 
 		addMouseListeners();
 		add(bola1,50,100);	
-		
-		
+
+
 		//añado las vidas en el marcador
 
 		add(corazon1,ANCHO_PANTALLA,ALTO_PANTALLA-140);
 		add(corazon2,ANCHO_PANTALLA+20,ALTO_PANTALLA-140);
 		add(corazon3,ANCHO_PANTALLA+40,ALTO_PANTALLA-140);
-		
+
 		add (cursor);
 		add(cursor.cursor60);
 	}
 
 	public void run(){
-		//creaPiramide();
+		creaPiramide();
 		miMarcador.addMarcador(this);
-
-
 		while (true){
+
 			bola1.muevete(this);
-			pause(15);
-			
-			
-		if(bola1.getY()>400){
-			
+			pause(5);
+			quitaVidas();
+
 		}
-			
-		}
+
 	}
 	public void mouseMoved(MouseEvent evento){
-		
+
 
 		cursor.setLocation(evento.getX()+14,cursor.getY());
 		(cursor.cursor60).setLocation(evento.getX()+14,cursor.getY());
-		
-		
+
+
 	}
 
 	private void creaPiramide(){
@@ -92,6 +94,37 @@ public class Arkanoid extends GraphicsProgram {
 						Color.YELLOW);//color
 				add(miLadrillo);
 			}
+		}
+	}
+	private void quitaVidas(){
+		if(bola1.getY()>=420&&contador==3){
+			remove(corazon3);
+			vidas=vidas-1;
+			contador=contador-1;
+			removeAll();
+			init();
+			creaPiramide();
+			miMarcador.addMarcador(this);
+			remove(corazon3);
+			waitForClick();
+		}
+		if(bola1.getY()>=420&&contador==2){
+			remove(corazon2);
+			vidas=vidas-1;
+			contador=contador-1;
+			removeAll();
+			init();
+			creaPiramide();
+			miMarcador.addMarcador(this);
+			remove(corazon3);
+			remove(corazon2);
+			waitForClick();
+		}
+		if(bola1.getY()>420&& contador==1){
+			remove(corazon1);
+			vidas=vidas-1;
+			contador=contador-1;
+			removeAll();
 		}
 	}
 

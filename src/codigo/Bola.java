@@ -70,8 +70,8 @@ public class Bola extends GOval{
 			}
 			ark.miMarcador.incrementaMarcador(1);
 			ark.remove(auxiliar);//borro el ladrillo
-			
-			
+
+
 			noHaChocado = false;
 		}
 
