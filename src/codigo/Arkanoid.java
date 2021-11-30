@@ -19,16 +19,17 @@ public class Arkanoid extends GraphicsProgram {
 	int vidas= 3;
 	int contador=3;
 	boolean victoria=false;
-	Bola bola1 = new Bola(10,10,Color.BLUE);
-	//declaro el fondo del juego
+	Bola bola1 = new Bola(50,100,10,10,this);
 	GImage fondo = new GImage("imagenes/fondo500,500.png");
 	GImage cursor60 = new GImage("imagenes/cursor60.png");
 	GImage corazon1 = new GImage("imagenes/corazon50(1).png");
 	GImage corazon2 = new GImage("imagenes/corazon50(2).png");
 	GImage corazon3 = new GImage("imagenes/corazon50(3).png");
+	GImage ladrillo = new GImage("imagenes/ladrillo.png");
+
 	Marcador miMarcador= new Marcador(20,40);
 	GImage fondoMarcador = new GImage("imagenes/fondo_marcador8.png");
-	Cursor cursor = new Cursor(400,60,10,Color.black);
+	Cursor cursor = new Cursor(0,400,60,10,this);
 
 
 
@@ -45,11 +46,10 @@ public class Arkanoid extends GraphicsProgram {
 		//añado el fondo lo primero porque asi se queda al fondo
 		add(fondo);
 
+
 		addMouseListeners();
 		add(bola1,50,100);	
 
-
-		//añado las vidas en el marcador
 
 		add(corazon1,ANCHO_PANTALLA,ALTO_PANTALLA-140);
 		add(corazon2,ANCHO_PANTALLA+20,ALTO_PANTALLA-140);
@@ -57,29 +57,25 @@ public class Arkanoid extends GraphicsProgram {
 
 		add (cursor);
 		add(cursor.cursor60);
+		bola1.pelota.sendToFront();
 	}
 
-	public void run(){
+	public void run(){		
 		creaPiramide();
 		miMarcador.addMarcador(this);
 		while (true){
-
 			bola1.muevete(this);
+			bola1.pelota.sendToFront();
+			bola1.pelota.setLocation(bola1.getX(),bola1.getY());
 			pause(5);
 			quitaVidas();
-
 		}
-
 	}
 	public void mouseMoved(MouseEvent evento){
 
-
 		cursor.setLocation(evento.getX()+14,cursor.getY());
-		(cursor.cursor60).setLocation(evento.getX()+14,cursor.getY());
-
-
+		(cursor.cursor60).setLocation(evento.getX()+14,cursor.getY());			
 	}
-
 	private void creaPiramide(){
 		int desplazamiento_inicial_X=23;
 		int desplazamiento_inicial_Y=20;
@@ -91,19 +87,18 @@ public class Arkanoid extends GraphicsProgram {
 						ALTO_LADRILLO*j+desplazamiento_inicial_Y,//posY
 						ANCHO_LADRILLO,//ancho
 						ALTO_LADRILLO,//alto
-						Color.YELLOW);//color
+						this);//color
 				add(miLadrillo);
 			}
 		}
 	}
-	private void quitaVidas(){
+	public void quitaVidas(){
 		if(bola1.getY()>=420&&contador==3){
 			remove(corazon3);
 			vidas=vidas-1;
 			contador=contador-1;
-			removeAll();
-			init();
-			creaPiramide();
+			remove(bola1);
+			add(bola1,50,100);	
 			miMarcador.addMarcador(this);
 			remove(corazon3);
 			waitForClick();
@@ -112,11 +107,9 @@ public class Arkanoid extends GraphicsProgram {
 			remove(corazon2);
 			vidas=vidas-1;
 			contador=contador-1;
-			removeAll();
-			init();
-			creaPiramide();
+			remove(bola1);
+			add(bola1,50,100);
 			miMarcador.addMarcador(this);
-			remove(corazon3);
 			remove(corazon2);
 			waitForClick();
 		}
