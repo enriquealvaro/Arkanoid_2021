@@ -2,7 +2,7 @@ package codigo;
 import java.awt.Font;
 import java.io.InputStream;
 
-//nose que como funciona esto pero lo he visto en internet, esta chulo y funciona
+//nose como funciona esto pero lo he visto en internet, esta chulo y funciona
 
 public class CustomFont {
 

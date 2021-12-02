@@ -9,6 +9,7 @@ import acm.graphics.GOval;
 
 public class Bola extends GOval{
 
+	
 
 	GImage pelota = new GImage("imagenes/pelotaArkanoid.png");
 
@@ -57,6 +58,9 @@ public class Bola extends GOval{
 
 
 	private boolean chequeaColision(double posx, double posy, Arkanoid ark){
+		
+		sonidoCursor _sonidoCursor=new sonidoCursor();
+		sonidoLadrillo _sonidoLadrillo=new sonidoLadrillo();
 
 		boolean noHaChocado = true;
 		GObject auxiliar;
@@ -71,14 +75,16 @@ public class Bola extends GOval{
 					dx=dx*-1;
 				}
 			}
+			
 			//rebote con la parte derecha del cursor
 			if(posx>=ark.cursor.getX()&& posx<=ark.cursor.getX() + ark.cursor.getWidth()/2){
 				if(dx>0){
 					dx=dx*-1;
 				}
 			}
-			sonidoCursor _sonidoCursor=new sonidoCursor();
+			
 			_sonidoCursor.start();
+			
 			noHaChocado = false;
 		}else if(auxiliar == null){ //si vale nll es que no había nada ahí
 
@@ -90,28 +96,29 @@ public class Bola extends GOval{
 			}else if(ladrillo.getX()+ladrillo.getWidth()<= posx || ladrillo.getX() >= posx ){
 				dx = dx*-1;
 			}
+			_sonidoLadrillo.start();
+			
+			noHaChocado = false;
 			ladrillo.eliminaLadrillo(ark);
 			ark.miMarcador.incrementaMarcador(1);
 			ark.remove(auxiliar);//borro el ladrillo
 
-			sonidoLadrillo _sonidoLadrillo=new sonidoLadrillo();
-			_sonidoLadrillo.start();
-			noHaChocado = false;
+
 		}
 
 		return noHaChocado;
 	}
-	
+	//cargo los sonidos para cuando reboten con el ladrillo y el cursor
 	public class sonidoLadrillo extends Thread {		
 		public void run() {                               
-            Sonido s = new Sonido();
-            s.sonido(s.getClass().getResource("/sonido/Sonido_golpeoLadrillo.mp3").getFile());
+            Sonido ladrillo = new Sonido();
+            ladrillo.sonido(ladrillo.getClass().getResource("../sonido/Sonido_golpeoLadrillo.wav").getFile());
         }
 	}
 	public class sonidoCursor extends Thread {		
 		public void run() {                               
-            Sonido s = new Sonido();
-            s.sonido(s.getClass().getResource("/sonido/Sonido_golpeoCursor.mp3").getFile());
+            Sonido cursor = new Sonido();
+            cursor.sonido(cursor.getClass().getResource("../sonido/Sonido_golepoCursor.wav").getFile());
         }
 	}
 

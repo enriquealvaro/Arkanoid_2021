@@ -34,6 +34,7 @@ public class Arkanoid extends GraphicsProgram {
 	Marcador miMarcador= new Marcador(20,40,this);
 	Cursor cursor = new Cursor(0,400,60,10,this);
 	CustomFont cf = new CustomFont();
+	boolean activo=false;
 
 
 
@@ -72,13 +73,15 @@ public class Arkanoid extends GraphicsProgram {
 		miMarcador.addMarcador(this);
 	
 		while (true){
-			bola1.muevete(this);
+			bonus();
 			bola1.pelota.sendToFront();
 			bola1.pelota.setLocation(bola1.getX(),bola1.getY());
 			pause(5);
 			quitaVidas();
 			ganasOpierdes();
-			bonus();
+			
+
+			
 		}
 	}
 	public void mouseMoved(MouseEvent evento){
@@ -100,7 +103,7 @@ public class Arkanoid extends GraphicsProgram {
 						this);//color
 				add(miLadrillo);
 				//añado una pausa para ver como se añade la piramide
-				pause(30);
+				pause(10);
 			}
 		}
 	}
@@ -110,6 +113,7 @@ public class Arkanoid extends GraphicsProgram {
 			vidas=vidas-1;
 			contador=contador-1;
 			remove(bola1);
+			remove(bonus);
 			add(bola1,50,100);	
 			miMarcador.addMarcador(this);
 			remove(corazon3);
@@ -120,6 +124,7 @@ public class Arkanoid extends GraphicsProgram {
 			vidas=vidas-1;
 			contador=contador-1;
 			remove(bola1);
+			remove(bonus);
 			add(bola1,50,100);
 			miMarcador.addMarcador(this);
 			remove(corazon2);
@@ -148,12 +153,19 @@ public class Arkanoid extends GraphicsProgram {
 	public void bonus(){
 		if(Marcador.puntuacion==35){
 			add(bonus,50,200);
+			activo=true;
+			
+		}
+		if(bonus.getY()>420&&contador>=3){
+			remove(bonus);
+			activo=false;
+		}
+		bola1.muevete(this);
+		if(activo){
 			bonus.muevete(this);
-			bonus.sendToFront();
-			if(bonus.getY()>420){
-				remove(bonus);
-			}
+
+		}
 		}
 	}
 
-}
+

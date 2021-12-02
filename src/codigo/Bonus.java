@@ -12,8 +12,8 @@ public class Bonus extends GOval{
 	
 	GImage bonus = new GImage("imagenes/pelotaBonus.png");
 	
-	int dx = 1; //velocidad eje x
-	int dy = 1; //velocidad eje y
+	double dx = 1.3; //velocidad eje x
+	double dy = 1.3; //velocidad eje y
 
 	public Bonus(double x,double y,double width, double height, Arkanoid ark) {
 		super(x,y,width, height);
