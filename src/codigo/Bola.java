@@ -22,10 +22,6 @@ public class Bola extends GOval{
 		ark.add(pelota);
 	}
 
-		
-
-		
-	
 	public void muevete(Arkanoid ark){
 		//rebote con el suelo y rebote con techo
 		if(getY()> ark.getHeight()||getY()<17){

@@ -9,8 +9,8 @@ import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
 public class Arkanoid extends GraphicsProgram {
 
-	CustomFont cf = new CustomFont();
-
+	
+	//añado todas las variables, imagenes y objetos que voy a utilizar en mi arkanoid
 	static final int ANCHO_LADRILLO =35;
 	static final int ALTO_LADRILLO =15;
 	static final int ANCHO_PANTALLA = 522;
@@ -18,6 +18,7 @@ public class Arkanoid extends GraphicsProgram {
 	static final int ANCHO_MARCADOR=300;
 	int vidas= 3;
 	int contador=3;
+	int nivel=1;
 	boolean victoria=false;
 	Bola bola1 = new Bola(50,100,10,10,this);
 	GImage fondo = new GImage("imagenes/fondo500,500.png");
@@ -26,35 +27,42 @@ public class Arkanoid extends GraphicsProgram {
 	GImage corazon2 = new GImage("imagenes/corazon50(2).png");
 	GImage corazon3 = new GImage("imagenes/corazon50(3).png");
 	GImage ladrillo = new GImage("imagenes/ladrillo.png");
-
-	Marcador miMarcador= new Marcador(20,40);
-	GImage fondoMarcador = new GImage("imagenes/fondo_marcador8.png");
+	GImage fondoMarcador = new GImage("imagenes/fondoArkanoid1.png");
+	GImage fondoMarcador2 = new GImage("imagenes/fondoArkanoid2.png");
+	GImage gameOver = new GImage("imagenes/gameOver4.png");
+	GImage hasGanado = new GImage("imagenes/hasGanado.png");
+	GImage inicio = new GImage("imagenes/inicio2.png");
+	Marcador miMarcador= new Marcador(20,40,this);
 	Cursor cursor = new Cursor(0,400,60,10,this);
+	CustomFont cf = new CustomFont();
 
 
 
 	public void init(){
-		//add(foto)
-		//waitForClick();
-		//remove(foto)
+		
+		//aqui pongo todo lo que quiero que aparezca en el inicio del programa (cuando lo abres)
+		inicio.setSize(ANCHO_PANTALLA+ANCHO_MARCADOR, ALTO_PANTALLA);
+		//añado pantalla de inicioy cuando hagas click se quita
+		add(inicio);
+		inicio.setLocation(-35,0);
+		waitForClick();
+		remove(inicio);
 		//añado el fondo del marcador
-
 		add(fondoMarcador,ANCHO_PANTALLA-22,0);
-
 		//añado dimensiones de la pantalla
 		setSize(ANCHO_PANTALLA+ANCHO_MARCADOR,ALTO_PANTALLA);
 		//añado el fondo lo primero porque asi se queda al fondo
 		add(fondo);
 
-
+		
 		addMouseListeners();
 		add(bola1,50,100);	
 
-
+		//añado las vidas en forma de corazones del Minecraft
 		add(corazon1,ANCHO_PANTALLA,ALTO_PANTALLA-140);
 		add(corazon2,ANCHO_PANTALLA+20,ALTO_PANTALLA-140);
 		add(corazon3,ANCHO_PANTALLA+40,ALTO_PANTALLA-140);
-
+		//añado el cursor con su skin  y mando la skin de la bola al frente para que se vea
 		add (cursor);
 		add(cursor.cursor60);
 		bola1.pelota.sendToFront();
@@ -63,12 +71,16 @@ public class Arkanoid extends GraphicsProgram {
 	public void run(){		
 		creaPiramide();
 		miMarcador.addMarcador(this);
+	
 		while (true){
 			bola1.muevete(this);
 			bola1.pelota.sendToFront();
 			bola1.pelota.setLocation(bola1.getX(),bola1.getY());
 			pause(5);
 			quitaVidas();
+			ganasOpierdes();
+			
+
 		}
 	}
 	public void mouseMoved(MouseEvent evento){
@@ -89,6 +101,8 @@ public class Arkanoid extends GraphicsProgram {
 						ALTO_LADRILLO,//alto
 						this);//color
 				add(miLadrillo);
+				//añado una pausa para ver como se añade la piramide
+				pause(30);
 			}
 		}
 	}
@@ -120,5 +134,19 @@ public class Arkanoid extends GraphicsProgram {
 			removeAll();
 		}
 	}
+	//si ganas te felicita y si perdes has perido
+	public void ganasOpierdes(){
+		//si tu has destrozado todos los ladrillos pasas de nivel, sino GAME OVER
+		if(Marcador.puntuacion==91&&contador>=1&&nivel==2){
+			removeAll();
+			add(hasGanado);	
+			hasGanado.setLocation(0,-50);
+		}else if(contador==0){
+			removeAll();
+			add(gameOver);
+			gameOver.setLocation(0, -50);
+		}
+	}
+
 
 }
