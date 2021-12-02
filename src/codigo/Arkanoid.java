@@ -18,9 +18,8 @@ public class Arkanoid extends GraphicsProgram {
 	static final int ANCHO_MARCADOR=300;
 	int vidas= 3;
 	int contador=3;
-	int nivel=1;
-	boolean victoria=false;
 	Bola bola1 = new Bola(50,100,10,10,this);
+	Bonus bonus = new Bonus(50,100,10,10,this);
 	GImage fondo = new GImage("imagenes/fondo500,500.png");
 	GImage cursor60 = new GImage("imagenes/cursor60.png");
 	GImage corazon1 = new GImage("imagenes/corazon50(1).png");
@@ -79,14 +78,13 @@ public class Arkanoid extends GraphicsProgram {
 			pause(5);
 			quitaVidas();
 			ganasOpierdes();
-			
-
+			bonus();
 		}
 	}
 	public void mouseMoved(MouseEvent evento){
 
-		cursor.setLocation(evento.getX()+14,cursor.getY());
-		(cursor.cursor60).setLocation(evento.getX()+14,cursor.getY());			
+		cursor.muevete(getWidth(), evento.getX());
+
 	}
 	private void creaPiramide(){
 		int desplazamiento_inicial_X=23;
@@ -137,7 +135,7 @@ public class Arkanoid extends GraphicsProgram {
 	//si ganas te felicita y si perdes has perido
 	public void ganasOpierdes(){
 		//si tu has destrozado todos los ladrillos pasas de nivel, sino GAME OVER
-		if(Marcador.puntuacion==91&&contador>=1&&nivel==2){
+		if(Marcador.puntuacion==91&&contador>=1){
 			removeAll();
 			add(hasGanado);	
 			hasGanado.setLocation(0,-50);
@@ -147,6 +145,15 @@ public class Arkanoid extends GraphicsProgram {
 			gameOver.setLocation(0, -50);
 		}
 	}
-
+	public void bonus(){
+		if(Marcador.puntuacion==35){
+			add(bonus,50,200);
+			bonus.muevete(this);
+			bonus.sendToFront();
+			if(bonus.getY()>420){
+				remove(bonus);
+			}
+		}
+	}
 
 }
