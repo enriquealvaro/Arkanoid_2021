@@ -108,7 +108,7 @@ public class Bola extends GOval{
 
 		return noHaChocado;
 	}
-	//cargo los sonidos para cuando reboten con el ladrillo y el cursor
+	//cargo los sonidos para cuando reboten con el ladrillo y el cursor auqneu van un poco descordinados
 	public class sonidoLadrillo extends Thread {		
 		public void run() {                               
             Sonido ladrillo = new Sonido();

@@ -10,6 +10,9 @@ import acm.graphics.GOval;
 public class Bonus extends GOval{
 
 	
+	//esta es la clase bonus, que es y funciona exactamente igual que la clase bola, solo que con otra skin, 
+	//para que se puedan diferenciar
+	
 	GImage bonus = new GImage("imagenes/pelotaBonus.png");
 	
 	double dx = 1.3; //velocidad eje x
