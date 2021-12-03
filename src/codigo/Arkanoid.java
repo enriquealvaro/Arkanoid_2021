@@ -152,7 +152,7 @@ public class Arkanoid extends GraphicsProgram {
 	//si ganas te felicita y si perdes te dice que has perdido
 	public void ganasOpierdes(){
 		//si tu has destrozado todos los ladrillos has ganado, sino GAME OVER
-		if(Marcador.puntuacion==91&&contador>=1){
+		if(Marcador.puntuacion==91*2&&contador>=1){
 			removeAll();
 			add(hasGanado);	
 			hasGanado.setLocation(0,-50);

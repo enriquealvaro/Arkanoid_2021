@@ -7,7 +7,7 @@ import java.net.URL;
 public class Sonido{
 	
 	//me queria pegar un tiro porque no sabia que tenia que instalar otra libreria
-	//esto es para cargar los sonidos y
+	//esto es para cargar los sonidos 
 	
 	public void sonido(String fichero) {
         AudioClip sonido;
